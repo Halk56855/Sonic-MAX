@@ -36,10 +36,13 @@ jobs:
           GM_USERNAME: ${{ secrets.GM_USERNAME }}
           GM_PASSWORD: ${{ secrets.GM_PASSWORD }}
         run: |
-          gm-cli run --target android --output "./output/sonic-max.apk"
+          gm-cli run --target android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: sonic-max-apk
-          path: output/sonic-max.apk
+          path: |
+            **/*.apk
+            */*.apk
+            output/**/*.apk
