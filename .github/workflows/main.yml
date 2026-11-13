@@ -36,7 +36,7 @@ jobs:
           GM_USERNAME: ${{ secrets.GM_USERNAME }}
           GM_PASSWORD: ${{ secrets.GM_PASSWORD }}
         run: |
-          gm-cli run "Sonic MAX Engine.gmx" --target android
+          gm-cli run --target android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
