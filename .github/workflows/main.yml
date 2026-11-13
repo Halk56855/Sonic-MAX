@@ -31,12 +31,15 @@ jobs:
       - name: Install GameMaker CLI
         run: npm install -g @gamemaker/gm-cli
 
+      - name: Inspect gm-cli Commands
+        run: gm-cli --help
+
       - name: Build Android APK
         env:
           GM_USERNAME: ${{ secrets.GM_USERNAME }}
           GM_PASSWORD: ${{ secrets.GM_PASSWORD }}
         run: |
-          gm-cli build --project "Sonic MAX Engine.yyp" --target android --output "./output/sonic-max.apk"
+          gm-cli compile --project "Sonic MAX Engine.yyp" --target android --output "./output/sonic-max.apk"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
