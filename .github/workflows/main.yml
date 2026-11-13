@@ -1,0 +1,27 @@
+name: Build Sonic-MAX APK
+
+on:
+  push:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up GameMaker build environment
+        run: |
+          echo "Preparing GameMaker project environment for Sonic-MAX..."
+          # يمكنك إضافة أوامر سطر الأوامر الخاصة بـ GameMaker CLI هنا إذا كان لديك اشتراك مدعوم
+        shell: pwsh
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonic-max-apk
+          path: |
+            *.apk
+            **/output/*.apk
