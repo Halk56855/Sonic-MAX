@@ -12,19 +12,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (Latest LTS)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
-      - name: Setup Java JDK 17 (Required for Android)
-        uses: actions/setup-java@v4
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK (Latest)
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-33 build-tools;33.0.2'
 
       - name: Install GameMaker CLI
         run: npm install -g @gamemaker/gm-cli
@@ -34,7 +36,6 @@ jobs:
           GM_USERNAME: ${{ secrets.GM_USERNAME }}
           GM_PASSWORD: ${{ secrets.GM_PASSWORD }}
         run: |
-          # استبدل اسم الملف أدناه باسم ملف .yyp الجديد بعد التحويل
           gm-cli build --project "Sonic MAX Engine.yyp" --target android --output "./output/sonic-max.apk"
 
       - name: Upload APK Artifact
