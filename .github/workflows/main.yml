@@ -1,4 +1,4 @@
-name: Build Sonic-MAX APK
+name: Build Sonic-MAX APK (Latest)
 
 on:
   push:
@@ -12,16 +12,33 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up GameMaker build environment
+      - name: Setup Node.js (Latest LTS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Java JDK 17 (Required for Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK (Latest)
+        uses: android-actions/setup-android@v3
+
+      - name: Install GameMaker CLI
+        run: npm install -g @gamemaker/gm-cli
+
+      - name: Build Android APK
+        env:
+          GM_USERNAME: ${{ secrets.GM_USERNAME }}
+          GM_PASSWORD: ${{ secrets.GM_PASSWORD }}
         run: |
-          echo "Preparing GameMaker project environment for Sonic-MAX..."
-          # يمكنك إضافة أوامر سطر الأوامر الخاصة بـ GameMaker CLI هنا إذا كان لديك اشتراك مدعوم
-        shell: pwsh
+          # استبدل اسم الملف أدناه باسم ملف .yyp الجديد بعد التحويل
+          gm-cli build --project "Sonic MAX Engine.yyp" --target android --output "./output/sonic-max.apk"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: sonic-max-apk
-          path: |
-            *.apk
-            **/output/*.apk
+          path: output/sonic-max.apk
